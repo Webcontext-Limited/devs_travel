@@ -1,6 +1,10 @@
 import React from "react"
 
-export default function Home() {
+import { graphql } from "gatsby"
+
+const Home = ({ data }) => {
+  const contData = data.title.nodes
+  console.log(contData)
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
@@ -16,6 +20,26 @@ export default function Home() {
           </p>
         </div>
       </div>
+      {contData.map(item => item.title)}
+      {console.log(data.title.nodes[0].title)}
     </div>
   )
 }
+export default Home
+
+// export const data = graphql`
+//   query pageQuery($id: String) {
+//     contentfulPage(id: { eq: $id }) {
+//       title
+//     }
+//   }
+// `
+export const ritchTextPosts = graphql`
+  {
+    title: allContentfulBlogPost {
+      nodes {
+        title
+      }
+    }
+  }
+`
