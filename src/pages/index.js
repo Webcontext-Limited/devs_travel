@@ -1,10 +1,10 @@
 import React from "react"
-
 import { graphql } from "gatsby"
+import { renderBasicRichTxt } from "../utils/renderBasicRichTxt"
 
 const Home = ({ data }) => {
   const contData = data.title.nodes
-  console.log(contData)
+
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
@@ -17,11 +17,20 @@ const Home = ({ data }) => {
           </p>
           <p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">
             displaying content soon.
+            {contData.map(item => {
+              return (
+                <>
+                  <p>{item.title}</p>
+                  <p key={item.key}>
+                    {renderBasicRichTxt({ richText: item.body })}
+                  </p>
+                  {console.log(item.body.references)}
+                </>
+              )
+            })}
           </p>
         </div>
       </div>
-      {contData.map(item => item.title)}
-      {console.log(data.title.nodes[0].title)}
     </div>
   )
 }
@@ -38,7 +47,19 @@ export const ritchTextPosts = graphql`
   {
     title: allContentfulBlogPost {
       nodes {
+        id
         title
+        body {
+          raw
+          references {
+            ... on ContentfulAsset {
+              contentful_id
+              __typename
+              title
+              gatsbyImageData(placeholder: BLURRED)
+            }
+          }
+        }
       }
     }
   }
