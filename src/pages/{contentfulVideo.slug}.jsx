@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import VideoPlayer from "../components/VideoPlayer"
-//import loadable from "@loadable/component"
-//const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
+//import VideoPlayer from "../components/VideoPlayer"
+import loadable from "@loadable/component"
+const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
 
 const VideoPage = ({ data }) => {
   const { title, url, cover } = data.video
