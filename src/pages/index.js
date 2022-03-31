@@ -2,10 +2,10 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 //import { renderBasicRichTxt } from "../utils/renderBasicRichTxt"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import VideoPlayer from "../components/VideoPlayer"
-//import loadable from "@loadable/component"
+//import VideoPlayer from "../components/VideoPlayer"
+import loadable from "@loadable/component"
 //import pMinDelay from "p-min-delay"
-//const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
+const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
 //const VideoPlayer = loadable(() =>
 //pMinDelay(import("../components/VideoPlayer"), 10000)
 //)
