@@ -4,11 +4,11 @@ import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 //import VideoPlayer from "../components/VideoPlayer"
 import loadable from "@loadable/component"
-//import pMinDelay from "p-min-delay"
-const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
-//const VideoPlayer = loadable(() =>
-//pMinDelay(import("../components/VideoPlayer"), 10000)
-//)
+import pMinDelay from "p-min-delay"
+//const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
+const VideoPlayer = loadable(() =>
+  pMinDelay(import("../components/VideoPlayer"), 10000)
+)
 
 const Home = ({ data }) => {
   //const contData = data.title.nodes
