@@ -10,6 +10,7 @@ module.exports = {
     "gatsby-plugin-postcss",
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-loadable-components-ssr`,
     {
       resolve: "gatsby-source-contentful",
       options: contentfulConfig,
