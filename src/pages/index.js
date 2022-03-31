@@ -1,14 +1,43 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql } from "gatsby"
-import { renderBasicRichTxt } from "../utils/renderBasicRichTxt"
+//import { renderBasicRichTxt } from "../utils/renderBasicRichTxt"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import VideoPlayer from "../components/VideoPlayer"
+//import loadable from "@loadable/component"
+//import pMinDelay from "p-min-delay"
+//const VideoPlayer = loadable(() => import("../components/VideoPlayer"))
+//const VideoPlayer = loadable(() =>
+//pMinDelay(import("../components/VideoPlayer"), 10000)
+//)
 
 const Home = ({ data }) => {
-  const contData = data.title.nodes
+  //const contData = data.title.nodes
+  const { title, url, cover } = data.video
+  console.log(data.video)
+  const [vid, setVid] = useState(false)
 
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-        <div className="text-center">
+        <div
+          className={`${
+            vid ? `hidden` : `visible`
+          }  mx-auto  lg:max-w-lg mt-24`}
+        >
+          <div className={`aspect-w-16 aspect-h-9`}>
+            <button onClick={() => setVid(true)}>
+              <GatsbyImage image={getImage(cover)} alt={title} />
+            </button>
+          </div>
+        </div>
+        <VideoPlayer
+          styles={`${!vid ? `hidden` : `visible`} mt-24`}
+          link={url}
+          playing={vid && true}
+        />
+        <p>{title}</p>
+
+        {/* <div className="text-center">
           <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase">
             Blog
           </h2>
@@ -24,12 +53,11 @@ const Home = ({ data }) => {
                   <p key={item.key}>
                     {renderBasicRichTxt({ richText: item.body })}
                   </p>
-                  {console.log(item.body.references)}
                 </>
               )
             })}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   )
@@ -43,23 +71,35 @@ export default Home
 //     }
 //   }
 // `
-export const ritchTextPosts = graphql`
+// export const ritchTextPosts = graphql`
+//   {
+//     title: allContentfulBlogPost {
+//       nodes {
+//         id
+//         title
+//         body {
+//           raw
+//           references {
+//             ... on ContentfulAsset {
+//               contentful_id
+//               __typename
+//               title
+//               gatsbyImageData(placeholder: BLURRED)
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `
+export const query = graphql`
   {
-    title: allContentfulBlogPost {
-      nodes {
-        id
-        title
-        body {
-          raw
-          references {
-            ... on ContentfulAsset {
-              contentful_id
-              __typename
-              title
-              gatsbyImageData(placeholder: BLURRED)
-            }
-          }
-        }
+    video: contentfulVideo {
+      id
+      title
+      url
+      cover {
+        gatsbyImageData(placeholder: BLURRED)
       }
     }
   }
